@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سیستم مدیریت گوسفند</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+            direction: rtl;
+        }
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #4ca1af 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .nav-pills .nav-link.active {
+            background-color: #2c3e50;
+        }
+        .section {
+            display: none;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .section.active {
+            display: block;
+        }
+        .form-label {
+            font-weight: 500;
+        }
+        .calculation-box {
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 20px;
+            border-right: 4px solid #2c3e50;
+        }
+        .login-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>سیستم مدیریت خرید و تولید گوسفند</h1>
+        <p>نسخه تحت وب - قابل دسترسی از طریق موبایل و کامپیوتر</p>
+    </div>
+
+    <div class="container">
+        <ul class="nav nav-pills mb-3 justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link active" data-section="login">ورود به سیستم</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-section="purchase">بخش خرید</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-section="production">بخش تولید</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-section="reports">گزارشات</a>
+            </li>
+        </ul>
+
+        <!-- بخش ورود به سیستم -->
+        <div id="login" class="section active">
+            <div class="login-container">
+                <h3 class="text-center mb-4">ورود به سیستم</h3>
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">نام کاربری</label>
+                        <input type="text" class="form-control" id="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">رمز عبور</label>
+                        <input type="password" class="form-control" id="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">ورود به سیستم</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- بخش خرید -->
+        <div id="purchase" class="section">
+            <h2>ثبت خرید جدید</h2>
+            <form id="purchaseForm">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="purchaseDate" class="form-label">تاریخ خرید</label>
+                        <input type="date" class="form-control" id="purchaseDate" required>
+<td>1402/05/16</td>
+                    <td>تولید</td>
+                    <td>پلاک: 623</td>
+                    <td>20.5 کیلو</td>
+                    <td>+850,000 تومان</td>
+                </tr>
+                <tr>
+                    <td>1402/05/14</td>
+                    <td>تولید</td>
+                    <td>پلاک: 615</td>
+                    <td>22.0 کیلو</td>
+                    <td>+1,200,000 تومان</td>
+                </tr>
+            `;
+        });
+
+        // تنظیم تاریخ امروز به عنوان پیش‌فرض
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('purchaseDate').value = today;
+        document.getElementById('productionDate').value = today;
+        
+        const sevenDaysAgo = new Date();
+        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+        document.getElementById('startDate').value = sevenDaysAgo.toISOString().split('T')[0];
+        document.getElementById('endDate').value = today;
+    </script>
+</body>
+</html>
+document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                // فعال کردن لینک جاری
+                this.classList.add('active');
+                
+                // مخفی کردن همه بخش‌ها
+                document.querySelectorAll('.section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // نمایش بخش انتخاب شده
+                const sectionId = this.getAttribute('data-section');
+                document.getElementById(sectionId).classList.add('active');
+            });
+        });
+
+        // مدیریت فرم ورود
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username && password) {
+                // تغییر به بخش خرید پس از ورود موفق
+                document.querySelector('[data-section="purchase"]').click();
+            } else {
+                alert('لطفاً نام کاربری و رمز عبور را وارد کنید.');
+            }
+        });
+
+        // محاسبات خرید
+        function calculatePurchase() {
+            const weight = parseFloat(document.getElementById('weight').value) || 0;
+            const pricePerKilo = parseFloat(document.getElementById('pricePerKilo').value) || 0;
+            const deposit = parseFloat(document.getElementById('deposit').value) || 0;
+            
+            const finalAmount = weight * pricePerKilo;
+            const remainingAmount = finalAmount - deposit;
+            
+            document.getElementById('finalAmount').textContent = finalAmount.toLocaleString();
+            document.getElementById('depositAmount').textContent = deposit.toLocaleString();
+            document.getElementById('remainingAmount').textContent = remainingAmount.toLocaleString();
+        }
+
+        // اضافه کردن event listener برای محاسبه实时
+        document.getElementById('weight').addEventListener('input', calculatePurchase);
+        document.getElementById('pricePerKilo').addEventListener('input', calculatePurchase);
+        document.getElementById('deposit').addEventListener('input', calculatePurchase);
+
+        // مدیریت فرم خرید
+        document.getElementById('purchaseForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('خرید با موفقیت ثبت شد!');
+            this.reset();
+            calculatePurchase(); // Reset calculations
+        });
+
+        // مدیریت فرم تولید
+        document.getElementById('productionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('تولید با موفقیت ثبت شد!');
+            this.reset();
+        });
+
+        // گزارشات
+        document.getElementById('purchaseReportBtn').addEventListener('click', function() {
+            const reportTable = document.querySelector('#reportTable tbody');
+            reportTable.innerHTML = 
+                <tr>
+                    <td>1402/05/15</td>
+                    <td>خرید</td>
+                    <td>احمدی (501)</td>
+                    <td>42.5 کیلو</td>
+                    <td>9,350,000 تومان</td>
+                </tr>
+                <tr>
+                    <td>1402/05/10</td>
+                    <td>خرید</td>
+                    <td>رضایی (502)</td>
+                    <td>38.0 کیلو</td>
+                    <td>7,600,000 تومان</td>
+                </tr>
+            ;
+        });
+
+        document.getElementById('productionReportBtn').addEventListener('click', function() {
+            const reportTable = document.querySelector('#reportTable tbody');
+            reportTable.innerHTML = `
+                <tr>
+</div>
+                    <div class="col-md-6">
+                        <label for="bookNumber" class="form-label">شماره دفتر</label>
+                        <input type="text" class="form-control" id="bookNumber" required>
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="customerCode" class="form-label">کد مشتری</label>
+                        <input type="text" class="form-control" id="customerCode" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="sheepCount" class="form-label">تعداد گوسفند</label>
+                        <input type="number" class="form-control" id="sheepCount" min="1" required>
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="sheepType" class="form-label">نوع گوسفند</label>
+                        <select class="form-select" id="sheepType" required>
+                            <option value="بره نر">بره نر</option>
+                            <option value="بره ماده">بره ماده</option>
+                            <option value="شیشک نر">شیشک نر</option>
+                            <option value="شیشک ماده">شیشک ماده</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="weight" class="form-label">وزن (کیلوگرم)</label>
+                        <input type="number" class="form-control" id="weight" step="0.1" required>
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="pricePerKilo" class="form-label">فی (قیمت هر کیلو)</label>
+                        <input type="number" class="form-control" id="pricePerKilo" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="deposit" class="form-label">مبلغ بیعانه</label>
+                        <input type="number" class="form-control" id="deposit" value="0">
+                    </div>
+                </div>
+                
+                <div class="calculation-box">
+                    <h5>محاسبات</h5>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p>مبلغ نهایی: <span id="finalAmount">۰</span> تومان</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p>مبلغ بیعانه: <span id="depositAmount">۰</span> تومان</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p>مانده پرداخت: <span id="remainingAmount">۰</span> تومان</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary mt-3">ثبت خرید</button>
+            </form>
+        </div>
+
+        <!-- بخش تولید -->
+        <div id="production" class="section">
+            <h2>ثبت تولید جدید</h2>
+            <form id="productionForm">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="productionDate" class="form-label">تاریخ تولید</label>
+                        <input type="date" class="form-control" id="productionDate" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="plateNumber" class="form-label">پلاک گوسفند</label>
+                        <input type="text" class="form-control" id="plateNumber" required>
+</div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="meatWeight" class="form-label">وزن گوشت (کیلوگرم)</label>
+                        <input type="number" class="form-control" id="meatWeight" step="0.1" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="liverWeight" class="form-label">وزن جگر (کیلوگرم)</label>
+                        <input type="number" class="form-control" id="liverWeight" step="0.1" required>
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="tailWeight" class="form-label">وزن دنبه (کیلوگرم)</label>
+                        <input type="number" class="form-control" id="tailWeight" step="0.1" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="otherWeight" class="form-label">سایر محصولات (کیلوگرم)</label>
+                        <input type="number" class="form-control" id="otherWeight" step="0.1">
+                    </div>
+                </div>
+                
+                <div class="calculation-box">
+                    <h5>محاسبات تولید</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p>بهای تولید: <span id="productionCostTotal">۰</span> تومان</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p>سود/زیان: <span id="profitLoss">۰</span> تومان</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary mt-3">ثبت تولید</button>
+            </form>
+        </div>
+
+        <!-- بخش گزارشات -->
+        <div id="reports" class="section">
+            <h2>گزارشات سیستم</h2>
+            
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="startDate" class="form-label">تاریخ شروع</label>
+                    <input type="date" class="form-control" id="startDate">
+                </div>
+                <div class="col-md-6">
+                    <label for="endDate" class="form-label">تاریخ پایان</label>
+                    <input type="date" class="form-control" id="endDate">
+                </div>
+            </div>
+            
+            <div class="d-flex justify-content-center mb-4">
+                <button class="btn btn-primary me-2" id="purchaseReportBtn">گزارش خریدها</button>
+                <button class="btn btn-success" id="productionReportBtn">گزارش تولیدات</button>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="table table-striped" id="reportTable">
+                    <thead>
+                        <tr>
+                            <th>تاریخ</th>
+                            <th>نوع</th>
+                            <th>مشتری/پلاک</th>
+                            <th>وزن</th>
+                            <th>مبلغ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- گزارشات اینجا نمایش داده می‌شوند -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // تغییر بین بخش‌های مختلف
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function() {
+                // غیرفعال کردن همه لینک‌ها
+
